@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar /work/app.jar
+./gradlew build && java -jar build/libs/inventory-service-0.0.1.jar
