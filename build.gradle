@@ -11,7 +11,6 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
-        classpath('io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE')
     }
 }
 
@@ -22,30 +21,26 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.palantir.docker'
 
-group = '955065381857.dkr.ecr.cn-north-1.amazonaws.com.cn'
+group = 'com.dmall'
+version = '0.1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
-bootJar {
+jar {
     baseName = 'inventory-service'
-    version = '0.1.0'
+    version = "${version}"
 }
 
-task unpack(type: Copy) {
-    dependsOn bootJar
-    from(zipTree(tasks.bootJar.outputs.files.singleFile))
-    into("build/dependency")
-}
 docker {
-    name "${project.group}/${bootJar.baseName}"
-    copySpec.from(tasks.unpack.outputs).into("dependency")
-    buildArgs(['DEPENDENCY': "dependency"])
+    name "${project.group}/${jar.baseName}"
+    files jar.archivePath
+    buildArgs(['JAR_FILE': "${jar.archiveName}"])
 }
 
 repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 
 ext {
@@ -53,16 +48,15 @@ ext {
 }
 
 dependencies {
-    compileOnly('org.projectlombok:lombok:1.18.4')
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    compile('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.flywaydb:flyway-core')
     runtimeOnly('mysql:mysql-connector-java')
-    compileOnly('org.projectlombok:lombok')
+    compileOnly('org.projectlombok:lombok:1.18.4')
     compile('io.springfox:springfox-swagger2:2.9.2')
     compile('io.springfox:springfox-swagger-ui:2.9.2')
     compile('org.modelmapper:modelmapper:1.1.1')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 dependencyManagement {
