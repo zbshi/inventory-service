@@ -2,7 +2,6 @@ package com.dmall.inventoryservice.applications;
 
 import com.dmall.inventoryservice.domain.Inventory;
 import com.dmall.inventoryservice.domain.InventoryLock;
-import com.dmall.inventoryservice.infrastructure.exception.CustomizeException;
 import com.dmall.inventoryservice.infrastructure.repositories.InventoryLockRepository;
 import com.dmall.inventoryservice.infrastructure.repositories.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +28,7 @@ public class InventoryService {
 
         synchronized (this) {
             Inventory inventory = inventoryRepository.getByProductId(productId);
-            if (inventory.getQuantity() < quantity) {
-                throw new CustomizeException(" not enough inventory");
-            }
-            inventory.setQuantity(inventory.getQuantity() - quantity);
+            inventory.deduct(quantity);
             inventoryRepository.update(inventory);
         }
 
