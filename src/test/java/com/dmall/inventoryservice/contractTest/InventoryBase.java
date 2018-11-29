@@ -20,7 +20,7 @@ public class InventoryBase {
 
         doNothing().when(inventoryService).createInventory(any(Inventory.class));
         when(inventoryService.lockInventory(any(InventoryLock.class))).thenReturn(1l);
-        doNothing().when(inventoryService).deductInventory(anyLong(), anyLong(), anyInt());
+        doNothing().when(inventoryService).deductInventory(anyLong());
         RestAssuredMockMvc.standaloneSetup(new InventoryController(inventoryService));
     }
 
