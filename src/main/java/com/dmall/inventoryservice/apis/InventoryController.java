@@ -44,8 +44,8 @@ public class InventoryController {
     }
 
     @ApiOperation(value = "扣减库存")
-    @PutMapping("/lock/{inventoryLockId}")
-    public void deductInventory(@PathVariable("inventoryLockId") long inventoryLockId) {
+    @PutMapping("/lock/{id}")
+    public void deductInventory(@PathVariable("id") long inventoryLockId) {
         inventoryService.deductInventory(inventoryLockId);
     }
 
