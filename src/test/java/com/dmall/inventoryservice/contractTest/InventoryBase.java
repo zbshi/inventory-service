@@ -10,6 +10,7 @@ import org.junit.Before;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class InventoryBase {
 
@@ -18,8 +19,8 @@ public class InventoryBase {
         final InventoryService inventoryService = mock(InventoryService.class);
 
         doNothing().when(inventoryService).createInventory(any(Inventory.class));
-        doNothing().when(inventoryService).lockInventory(any(InventoryLock.class));
-        doNothing().when(inventoryService).deductInventory(anyLong(), anyInt());
+        when(inventoryService.lockInventory(any(InventoryLock.class))).thenReturn(1l);
+        doNothing().when(inventoryService).deductInventory(anyLong(), anyLong(), anyInt());
         RestAssuredMockMvc.standaloneSetup(new InventoryController(inventoryService));
     }
 

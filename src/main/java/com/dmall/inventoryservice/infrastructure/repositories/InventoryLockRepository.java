@@ -1,11 +1,14 @@
 package com.dmall.inventoryservice.infrastructure.repositories;
 
 import com.dmall.inventoryservice.domain.InventoryLock;
+import com.dmall.inventoryservice.infrastructure.exception.CustomizeException;
 import com.dmall.inventoryservice.infrastructure.repositories.entity.InventoryLockEntity;
 import com.dmall.inventoryservice.infrastructure.repositories.persistence.InventoryLockPersistence;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class InventoryLockRepository {
@@ -15,7 +18,18 @@ public class InventoryLockRepository {
     @Autowired
     private InventoryLockPersistence repository;
 
-    public void save(InventoryLock inventoryLock) {
-        repository.save(mapper.map(inventoryLock, InventoryLockEntity.class));
+    public long save(InventoryLock inventoryLock) {
+        InventoryLockEntity inventoryLockEntity = mapper.map(inventoryLock, InventoryLockEntity.class);
+        return repository.save(inventoryLockEntity).getId();
+    }
+
+    public InventoryLock getInventoryLockById(long id) {
+        Optional<InventoryLockEntity> inventoryLockEntity = repository.findById(id);
+        return inventoryLockEntity.map(lock -> mapper.map(lock, InventoryLock.class))
+                .orElseThrow(() -> new CustomizeException("inventory lock not found"));
+    }
+
+    public void delete(long inventoryLockId) {
+        repository.deleteById(inventoryLockId);
     }
 }

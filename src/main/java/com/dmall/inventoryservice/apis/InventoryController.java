@@ -27,11 +27,6 @@ public class InventoryController {
         this.inventoryService = inventoryService;
     }
 
-    @GetMapping
-    public List<InventoryView> getInventories() {
-        return null;
-    }
-
     @ApiOperation(value = "创建库存")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -43,16 +38,15 @@ public class InventoryController {
     @ApiOperation(value = "锁定库存")
     @PostMapping("/lock")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createInventory(@RequestBody InventoryLockRequest inventoryLockRequest) {
+    public long createInventory(@RequestBody InventoryLockRequest inventoryLockRequest) {
         InventoryLock inventoryLock = InventoryLockFactory.ToDomain(inventoryLockRequest.getProductId(), inventoryLockRequest.getQuantity());
-        inventoryService.lockInventory(inventoryLock);
+        return inventoryService.lockInventory(inventoryLock);
     }
 
     @ApiOperation(value = "扣减库存")
-    @PutMapping("/deduction")
-    public void deductInventory(@RequestBody InventoryDeductionRequest inventoryDeductionRequest) {
-        inventoryService.deductInventory(inventoryDeductionRequest.getProductId(),
-                inventoryDeductionRequest.getQuantity());
+    @PutMapping("/lock/{inventoryLockId}")
+    public void deductInventory(@PathVariable("inventoryLockId") long inventoryLockId) {
+        inventoryService.deductInventory(inventoryLockId);
     }
 
 
