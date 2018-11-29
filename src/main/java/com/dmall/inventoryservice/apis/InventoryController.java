@@ -20,8 +20,12 @@ import java.util.List;
 @RequestMapping("/inventories")
 public class InventoryController {
 
-    @Autowired
     private InventoryService inventoryService;
+
+    @Autowired
+    public InventoryController(InventoryService inventoryService) {
+        this.inventoryService = inventoryService;
+    }
 
     @GetMapping
     public List<InventoryView> getInventories() {
