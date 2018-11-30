@@ -3,7 +3,6 @@ package com.dmall.inventoryservice.contractTest;
 import com.dmall.inventoryservice.apis.InventoryController;
 import com.dmall.inventoryservice.applications.InventoryService;
 import com.dmall.inventoryservice.domain.Inventory;
-import com.dmall.inventoryservice.domain.InventoryLock;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
 
