@@ -20,6 +20,7 @@ public class InventoryBase {
 
         doNothing().when(inventoryService).save(any(Inventory.class));
         doReturn(1L).when(inventoryService).saveInventoryLock(any(InventoryLock.class));
+        doNothing().when(inventoryService).unlock(any(Long.class));
         RestAssuredMockMvc.standaloneSetup(new InventoryController(inventoryService));
     }
 

@@ -15,4 +15,9 @@ public class Inventory {
     private Long productId;
 
     private Integer quantity;
+
+    public Inventory deductProduct(Integer num) {
+        this.setQuantity(this.quantity - num);
+        return this;
+    }
 }

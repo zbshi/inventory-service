@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InventoryPersistence extends CrudRepository<InventoryEntity, Long> {
+    InventoryEntity findByProductId(Long id);
 }

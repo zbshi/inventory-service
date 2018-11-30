@@ -37,4 +37,11 @@ public class InventoryController {
         InventoryLock inventoryLock = InventoryFactory.toLockDomain(lockRequest.getProductId(), lockRequest.getQuantity());
         return inventoryService.saveInventoryLock(inventoryLock);
     }
+
+    @ApiOperation(value = "扣除库存")
+    @PutMapping("/lock/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void lockInventory(@PathVariable(value = "id") long id) {
+        inventoryService.unlock(id);
+    }
 }
