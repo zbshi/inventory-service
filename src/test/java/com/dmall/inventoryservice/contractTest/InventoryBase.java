@@ -6,10 +6,9 @@ import com.dmall.inventoryservice.domain.Inventory;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class InventoryBase {
 
@@ -17,9 +16,7 @@ public class InventoryBase {
     public void setup() {
         final InventoryService inventoryService = mock(InventoryService.class);
 
-        doNothing().when(inventoryService).createInventory(any(Inventory.class));
-        when(inventoryService.lockInventory(any(InventoryLock.class))).thenReturn(1l);
-        doNothing().when(inventoryService).deductInventory(anyLong());
+        doNothing().when(inventoryService).save(any(Inventory.class));
         RestAssuredMockMvc.standaloneSetup(new InventoryController(inventoryService));
     }
 
