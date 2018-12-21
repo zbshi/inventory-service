@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-IMAGE_REPO=shipping-service
-
 $(aws ecr get-login --no-include-email --region cn-north-1)
 
 ./gradlew docker
