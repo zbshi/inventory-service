@@ -2,7 +2,7 @@ node{
     step([$class: 'WsCleanup'])
 
     stage('Checkout') {
-        git url: 'https://github.com/nbbank-cloud-native-workshop/shipping-service.git', branch: 'master'
+        git url: 'https://github.com/nbbank-cloud-native-workshop/inventory-service.git', branch: 'master'
     }
 
     stage('Test') {
