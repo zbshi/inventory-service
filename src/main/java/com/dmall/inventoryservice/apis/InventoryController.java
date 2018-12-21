@@ -44,4 +44,9 @@ public class InventoryController {
     public void lockInventory(@PathVariable(value = "id") long id) {
         inventoryService.unlock(id);
     }
+
+    @GetMapping("/info")
+    public String getInfo() {
+        return "OK!";
+    }
 }
