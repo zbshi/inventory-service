@@ -25,9 +25,22 @@ spec:
     spec:
       containers:
       - name: inventory-service
-        image: 955065381857.dkr.ecr.cn-north-1.amazonaws.com.cn/inventory-service:BUILD_VERSION
+        image: IMAGE_URI
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: db_user
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: db_pass
       imagePullSecrets:
         - name: new-secret
