@@ -49,4 +49,9 @@ public class InventoryController {
     public String getInfo() {
         return "OK!";
     }
+    
+    @GetMapping("/inventory")
+    public String getInventory() {
+        return "getInventory!";
+    }
 }
